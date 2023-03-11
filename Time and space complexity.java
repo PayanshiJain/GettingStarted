@@ -175,6 +175,76 @@ public class Main {
 
 
 
+//MERGE TWO SORTED ARRAYS
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static int[] mergeTwoSortedArrays(int[] a, int[] b){
+    //write your code here
+    int n=a.length;
+    int m=b.length;
+    int res[] =new int[n+m];  //we make a new arr k whose size is n+m
+
+    int i=0;  //pointing on arr a
+    int j=0;  //pointing on arr b
+    int k=0;  //pointing on arr k
+
+    while(i<n && j<m){
+      if(a[i]<b[j]){
+        res[k]=a[i];
+        i++;
+        k++;
+      }
+      else{
+        res[k]=b[j];
+        j++;
+        k++;
+      }
+    }
+
+    while(i<a.length){     //if i wala pointer completely pura traverse nhi hua ho
+      res[k]=a[i];
+      i++;
+      k++; 
+    }
+
+    while(j<b.length){
+      res[k]=b[j];
+      j++;
+      k++;
+    }
+
+    return res;
+  }
+
+
+  public static void print(int[] arr){
+    for(int i = 0 ; i < arr.length; i++){
+      System.out.println(arr[i]);
+    }
+  }
+  public static void main(String[] args){
+    Scanner scn = new Scanner(System.in);
+    int n = scn.nextInt();
+    int[] a = new int[n];
+    for(int i = 0 ; i < n; i++){
+      a[i] = scn.nextInt();
+    }
+    int m = scn.nextInt();
+    int[] b = new int[m];
+    for(int i = 0 ; i < m; i++){
+      b[i] = scn.nextInt();
+    }
+    int[] mergedArray = mergeTwoSortedArrays(a,b);
+    print(mergedArray);
+  }
+
+}
+
+
+
 
 
 
@@ -389,6 +459,81 @@ public class Main {
   }
 
 }
+
+
+
+
+
+
+//QUICK SELECT
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static int quickSelect(int[] arr, int lo, int hi, int k) {
+    //write your code here
+    int pivot=arr[hi];
+    int pi=partition(arr,pivot,lo,hi);  //pivot index
+
+    if(k>pi){
+      return quickSelect(arr,pi+1,hi,k);   //discard left side of pivot idx(consider only right side)
+    }
+    else if(k<pi){
+      return quickSelect(arr,lo,pi-1,k);   //discard right side of pivot idx(consider only left side)
+    }
+    else{
+      return arr[pi];   //when both k and pi are =
+    }
+
+    
+  }
+
+  public static int partition(int[] arr, int pivot, int lo, int hi) {
+    System.out.println("pivot -> " + pivot);
+    int i = lo, j = lo;
+    while (i <= hi) {
+      if (arr[i] <= pivot) {
+        swap(arr, i, j);
+        i++;
+        j++;
+      } else {
+        i++;
+      }
+    }
+    System.out.println("pivot index -> " + (j - 1));
+    return (j - 1);
+  }
+
+  // used for swapping ith and jth elements of array
+  public static void swap(int[] arr, int i, int j) {
+    System.out.println("Swapping " + arr[i] + " and " + arr[j]);
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+
+  public static void print(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      System.out.print(arr[i] + " ");
+    }
+    System.out.println();
+  }
+
+  public static void main(String[] args) throws Exception {
+    Scanner scn = new Scanner(System.in);
+    int n = scn.nextInt();
+    int[] arr = new int[n];
+    for (int i = 0; i < n; i++) {
+      arr[i] = scn.nextInt();
+    }
+    int k = scn.nextInt();
+    System.out.println(quickSelect(arr,0,arr.length - 1,k - 1));
+  }
+
+}
+
+
 
 
 
